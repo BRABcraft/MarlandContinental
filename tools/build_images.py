@@ -1,6 +1,6 @@
-# Builds site images from the "Marland continental products" folder (never from the pitch deck).
+# Builds site images from the "Marland continental products" folder.
 # Edit the P table to change covers, crops or views, then run: python tools/build_images.py
-# Deck renders are intentionally excluded. Prices live separately in js/products.js.
+# Every cover is a rendering. Prices live separately in js/products.js; keep its `images` lists in step with this table.
 import os, shutil, json
 from PIL import Image
 
@@ -14,8 +14,8 @@ SITE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", 
 P = {
   "bleacher-unit": (("photo", "40 foot bleacher unit 3.png", (.5, .5)),
       [("40 foot bleacher unit 3.png", "Rendering", "cover"), ("40 feet bleacher unit 2.png", "Plans & elevations", "contain")]),
-  "stacked-bleacher-unit": (("drawing", "40 feet stacked bleacher unit 2.png", (1240, 1120, 2710, 1885)),
-      [("40 feet stacked bleacher unit 2.png", "Plans & elevations", "contain")]),
+  "stacked-bleacher-unit": (("photo", "40 feet stacked bleacher unit 1.png", (.5, .5)),
+      [("40 feet stacked bleacher unit 1.png", "Rendering", "cover"), ("40 feet stacked bleacher unit 2.png", "Plans & elevations", "contain")]),
   "press-box": (("photo", "20 foot press box 2.jpg", (.5, .5)),
       [("20 foot press box 2.jpg", "Rendering", "cover"), ("20 foot press box.jpg", "Spec sheet", "contain")]),
   "equipment-room": (("photo", "20 foot equipment room 2.png", (.52, .5)),
@@ -24,21 +24,24 @@ P = {
       [("20 feet training room 1.png", "Interior", "cover"), ("20 feet training room 2.png", "Plans & elevations", "contain")]),
   "training-room-40": (("photo", "40 feet training room 1.png", (.5, .62)),
       [("40 feet training room 1.png", "Interior", "cover"), ("40 feet training room 2.png", "Plans & elevations", "contain")]),
-  "weight-room": (("drawing", "20 feet weight room 2.png", (540, 262, 1805, 830)),
-      [("20 feet weight room 2.png", "Plans & elevations", "contain")]),
-  "concession-stand": (("drawing", "20 feet concession stand 2.png", (530, 235, 1800, 805)),
-      [("20 feet concession stand 2.png", "Plans & elevations", "contain")]),
+  "weight-room": (("photo", "20 feet weight room 1.png", (.5, .5)),
+      [("20 feet weight room 1.png", "Rendering", "cover"), ("20 feet weight room 2.png", "Plans & elevations", "contain")]),
+  "concession-stand": (("photo", "20 feet conession stand 1.png", (.5, .5)),
+      [("20 feet conession stand 1.png", "Rendering", "cover"), ("20 feet concession stand 2.png", "Plans & elevations", "contain")]),
   "merchandise-stand": (("photo", "20 feet merchandise stand 3.png", (.5, .5)),
-      [("20 feet merchandise stand 3.png", "Rendering", "cover"), ("20 feet merchandise stand 2.png", "Plans & elevations", "contain")]),
+      [("20 feet merchandise stand 3.png", "Rendering · High school", "cover"), ("20 feet merchandise stand 1.png", "Rendering · College", "cover"),
+       ("20 feet merchandise stand 2.png", "Plans & elevations", "contain")]),
   "ticket-booth": (("photo", "20 feet ticket booth 3.png", (.5, .5)),
-      [("20 feet ticket booth 3.png", "Rendering", "cover"), ("20 feet ticket booth 2.png", "Plans & elevations", "contain")]),
+      [("20 feet ticket booth 3.png", "Rendering · High school", "cover"), ("20 feet ticket booth 1.png", "Rendering · College", "cover"),
+       ("20 feet ticket booth 2.png", "Plans & elevations", "contain")]),
   "referee-lounge": (("photo", "20 feet referee longue 2.png", (.5, .55)),
       [("20 feet referee longue 2.png", "Interior", "cover"), ("20 feet referee longue 3.png", "Plans & elevations", "contain")]),
-  "visiting-team-facility": (("photo", "40 feet visiting team facilities 3.png", (.5, .5)),
-      [("40 feet visiting team facilities 3.png", "Locker room", "cover"), ("40 feet visiting team facilities 4.png", "Vanity & showers", "cover"),
-       ("40 feet visiting team facilities 2.png", "Floor plan", "contain")]),
-  "clubhouse-deck": (("drawing", "20 foot clubhouse 2.png", (585, 170, 1795, 858)),
-      [("20 foot clubhouse 2.png", "Plans & elevations", "contain")]),
+  "visiting-team-facility": (("photo", "40 feet visiting team facilities 1.png", (.5, .5)),
+      [("40 feet visiting team facilities 1.png", "Rendering", "cover"), ("40 feet visiting team facilities 3.png", "Locker room", "cover"),
+       ("40 feet visiting team facilities 4.png", "Vanity & showers", "cover"), ("40 feet visiting team facilities 5.png", "Vanity & showers · 2", "cover"),
+       ("40 feet visiting team facilities 6.png", "Vanity & showers · 3", "cover"), ("40 feet visiting team facilities 2.png", "Floor plan", "contain")]),
+  "clubhouse-deck": (("photo", "20 foot clubhouse 1.png", (.5, .5)),
+      [("20 foot clubhouse 1.png", "Rendering", "cover"), ("20 foot clubhouse 2.png", "Plans & elevations", "contain")]),
   "vip-club": (("crop", "40 foot 1 floor luxury suite 2.jpg", (428, 0, 851, 282)),
       [("40 foot 1 floor luxury suite 2.jpg", "Rendering", "contain", (322, 0, 988, 282)), ("40 foot 1 floor luxury suite 2.jpg", "Spec sheet", "contain")]),
   "vip-club-stacked": (("crop", "40 foot 2 floor luxury suite.jpg", (375, 0, 825, 300)),
@@ -104,7 +107,7 @@ for slug, ((kind, f, arg), views) in P.items():
 
 # brand assets from the brand folder; remove deck-derived images
 b = SITE + "brand/"
-for old in ["stadia-ip.png", "struxure-mark.png", "robot.png", "mark.png"]:
+for old in ["stadia-ip.png", "robot.png", "mark.png"]:  # old deck-derived files; keep struxure-mark.png and stadia-*.png
     if os.path.exists(b + old): os.remove(b + old)
 if os.path.exists(SITE + "stadium-974.jpg"): os.remove(SITE + "stadium-974.jpg")
 shutil.copy(ASSETS + "Logo-removebg-preview.png", b + "logo-horizontal.png")

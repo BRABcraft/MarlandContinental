@@ -9,6 +9,8 @@
 
    Images live in assets/img/products/<slug>/ : cover.jpg, cover-sm.jpg and
    view-N.jpg. fit "cover" fills the frame; "contain" shows the whole image.
+   `url` is the product page folder: buy/<url>/ (run tools/build_product_pages.mjs
+   after adding or renaming a product).
    ========================================================================== */
 
 window.MC_CATEGORIES = [
@@ -33,6 +35,7 @@ window.MC_STAGE_AV = { economy: 52564, standard: 132877, luxury: 294118 };
 window.MC_PRODUCTS = [
   {
     slug: "bleacher-unit",
+    url: "40-foot-bleachers",
     name: "Bleacher Unit",
     category: "seating",
     container: "40′ high-cube",
@@ -46,6 +49,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "stacked-bleacher-unit",
+    url: "40-foot-stacked-bleachers",
     name: "Stacked Bleacher Unit",
     category: "seating",
     container: "2 × 40′ high-cube",
@@ -54,11 +58,12 @@ window.MC_PRODUCTS = [
     features: ["Two seating decks, four rows each", "Engineered stair tower and walkway", "About 19′ overall height", "Bench, fold-down or chairback seating"],
     tiers: "Everything in the single bleacher unit, doubled, plus the stair tower and stacked-frame structural design.",
     prices: { economy: 70056, standard: 136653, luxury: 241748 },
-    images: [{ src: "view-1.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Grandstand", canvas: "Two canopy fascias + stair tower", placement: "Sideline, the tallest structure on site" }
   },
   {
     slug: "training-room-20",
+    url: "20-foot-training-room",
     name: "Training Room 20′",
     category: "training",
     container: "20′ high-cube",
@@ -72,6 +77,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "training-room-40",
+    url: "40-foot-training-room",
     name: "Training Room 40′",
     category: "training",
     container: "40′ high-cube",
@@ -85,6 +91,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "weight-room",
+    url: "20-foot-weight-room",
     name: "Weight Room",
     category: "training",
     container: "20′ high-cube",
@@ -93,11 +100,12 @@ window.MC_PRODUCTS = [
     features: ["16′ open side", "Rack, bench and dumbbells", "Functional trainer and treadmill at Standard and up", "Rubber flooring and LED lighting"],
     tiers: "Equipment is over half the cost. Economy is a budget rack and dumbbells, Standard adds a functional trainer and commercial treadmill, and Luxury is premium-brand throughout.",
     prices: { economy: 28600, standard: 56754, luxury: 106347 },
-    images: [{ src: "view-1.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Strength Lab", canvas: "Exterior wrap + interior feature wall", placement: "Practice fields and team areas" }
   },
   {
     slug: "visiting-team-facility",
+    url: "40-foot-visiting-team-facility",
     name: "Visiting Team Facility",
     category: "team",
     container: "40′ high-cube",
@@ -106,11 +114,12 @@ window.MC_PRODUCTS = [
     features: ["Lockers and bench seating", "Three showers and two toilets", "Vanities and three water heaters", "Waterproof wet-area finishes"],
     tiers: "Plumbing drives the price. Waterproofing (FRP, hot-mop tile or porcelain) and locker grade do the rest.",
     prices: { economy: 64308, standard: 105648, luxury: 161299 },
-    images: [{ src: "view-1.jpg", label: "Locker room", fit: "cover" }, { src: "view-2.jpg", label: "Vanity & showers", fit: "cover" }, { src: "view-3.jpg", label: "Floor plan", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Locker room", fit: "cover" }, { src: "view-3.jpg", label: "Vanity & showers", fit: "cover" }, { src: "view-4.jpg", label: "Vanity & showers · 2", fit: "cover" }, { src: "view-5.jpg", label: "Vanity & showers · 3", fit: "cover" }, { src: "view-6.jpg", label: "Floor plan", fit: "contain" }],
     partner: { naming: "The [Your Brand] Visitors’ Locker Room", canvas: "Two side walls, ~380 sq ft each", placement: "Field-side, in view of the visiting crowd" }
   },
   {
     slug: "referee-lounge",
+    url: "20-foot-referee-lounge",
     name: "Referee Lounge",
     category: "team",
     container: "20′ high-cube",
@@ -124,6 +133,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "baseball-dugout",
+    url: "40-foot-baseball-dugout",
     name: "Baseball Dugout",
     category: "team",
     container: "40′ high-cube",
@@ -137,6 +147,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "equipment-room",
+    url: "20-foot-equipment-room",
     name: "Equipment Room",
     category: "team",
     container: "20′ high-cube",
@@ -150,6 +161,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "press-box",
+    url: "20-foot-press-box",
     name: "Press Box",
     category: "gameday",
     container: "20′ high-cube",
@@ -163,6 +175,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "ticket-booth",
+    url: "20-foot-ticket-booth",
     name: "Ticket Booth",
     category: "gameday",
     container: "20′ high-cube",
@@ -171,11 +184,12 @@ window.MC_PRODUCTS = [
     features: ["Full-height turnstile lane", "Secure ticket office with transaction window", "QR/RFID scanner integration at Luxury", "Ties into existing fencing"],
     tiers: "The turnstile: mechanical at Economy, counter and drop-arm at Standard, electronic with QR/RFID scanning at Luxury. The transaction window follows the same curve.",
     prices: { economy: 27686, standard: 48237, luxury: 85224 },
-    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering · High school", fit: "cover" }, { src: "view-2.jpg", label: "Rendering · College", fit: "cover" }, { src: "view-3.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Gate", canvas: "Two side walls + window header", placement: "Main entry, the first thing every fan sees" }
   },
   {
     slug: "concession-stand",
+    url: "20-foot-concession-stand",
     name: "Concession Stand",
     category: "concessions",
     container: "20′ high-cube",
@@ -184,11 +198,12 @@ window.MC_PRODUCTS = [
     features: ["16′ serving window with awning", "NSF-compliant prep and serving line", "Custom graphic wrap", "Type-I hood, ice machine and grease interceptor at Luxury"],
     tiers: "Health-department compliance. Economy meets minimum NSF, Standard adds full coved finishes and a warming line, and Luxury adds a Type-I hood, ice machine and grease interceptor.",
     prices: { economy: 34898, standard: 65548, luxury: 123320 },
-    images: [{ src: "view-1.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Snack Bar", canvas: "Full wrap + menu board + awning", placement: "Concourse, every fan walks past" }
   },
   {
     slug: "merchandise-stand",
+    url: "20-foot-merchandise-stand",
     name: "Merchandise Stand",
     category: "concessions",
     container: "20′ high-cube",
@@ -197,11 +212,12 @@ window.MC_PRODUCTS = [
     features: ["19′ fold-up awning side", "Slatwall and apparel racks", "Header signage", "Lockable when closed"],
     tiers: "Fixtures and branding: stock slatwall and a folding table, a full slatwall system, or custom back-lit millwork, with a much bigger signage budget at the top.",
     prices: { economy: 27057, standard: 49416, luxury: 90022 },
-    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering · High school", fit: "cover" }, { src: "view-2.jpg", label: "Rendering · College", fit: "cover" }, { src: "view-3.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Team Shop", canvas: "Header sign + full exterior wrap", placement: "Main concourse and gates" }
   },
   {
     slug: "clubhouse-deck",
+    url: "20-foot-clubhouse-observation-deck",
     name: "Clubhouse + Observation Deck",
     category: "hospitality",
     container: "20′ high-cube + decks",
@@ -210,11 +226,12 @@ window.MC_PRODUCTS = [
     features: ["Bar with seating", "Elevated roof deck with railing", "Lower deck with table seating", "Exterior stair"],
     tiers: "The roof deck: screw piers and treated lumber, footings and composite, or hot-dip galvanized steel with ipe and glass-infill rail. Bar equipment scales with it.",
     prices: { economy: 55130, standard: 94428, luxury: 160005 },
-    images: [{ src: "view-1.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Clubhouse", canvas: "Container walls + deck rail banners", placement: "Field-side, visible from the stands" }
   },
   {
     slug: "vip-club",
+    url: "40-foot-vip-club",
     name: "Luxury Suite / VIP Club",
     category: "hospitality",
     container: "40′ high-cube + deck",
@@ -228,6 +245,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "vip-club-stacked",
+    url: "40-foot-stacked-vip-club",
     name: "Stacked VIP Club",
     category: "hospitality",
     container: "2 × 40′ high-cube",
@@ -241,6 +259,7 @@ window.MC_PRODUCTS = [
   },
   {
     slug: "container-stage",
+    url: "40-foot-container-stage",
     name: "Container Stage",
     category: "hospitality",
     container: "2 × 40′ + 24′ × 20′ deck",
@@ -309,3 +328,12 @@ window.MC_formatPrice = function (n) {
 window.MC_formatK = function (n) {
   return "$" + Math.round(n / 1000) + "K";
 };
+
+/* Photos for the "From the field" section on the landing pages (sales meetings,
+   facilities being built at 500 Confederate Ave, installs). Put the files in
+   assets/img/field/ and list them here; the photo strip appears automatically
+   once this list has entries. tag is a short label shown on the photo.
+   Example:
+   { src: "assets/img/field/sales-meeting-sweet-briar.jpg", tag: "Sales meeting", caption: "Walking the site with Sweet Briar College athletics" },
+   { src: "assets/img/field/warehouse-press-box.jpg", tag: "In the shop", caption: "A press box taking shape at 500 Confederate Ave" }, */
+window.MC_FIELD_PHOTOS = [];
