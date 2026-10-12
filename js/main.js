@@ -34,7 +34,6 @@ const MC_ROOT = (function () {
   const fmt = window.MC_formatPrice || ((n) => "$" + n);
   const bySlug = (slug) => products.find((p) => p.slug === slug) || future.find((p) => p.slug === slug);
   const catLabel = (id) => (categories.find((c) => c.id === id) || {}).label || "";
-  const pad = (n) => String(n).padStart(2, "0");
   const coverPath = (slug, small) => `${MC_ROOT}assets/img/products/${slug}/cover${small ? "-sm" : ""}.jpg`;
   const productURL = (p) => `${MC_ROOT}buy/${p.url}/`;
   const viewPath = (slug, view) => `${MC_ROOT}assets/img/products/${slug}/${view.src}`;
@@ -90,79 +89,16 @@ const MC_ROOT = (function () {
     window.addEventListener("resize", () => { if (window.innerWidth > 1100) setOpen(false); });
   }
 
-  /* ---------- Reveal on scroll ---------- */
-  function initReveal() {
-    const els = $$(".reveal");
-    if (!("IntersectionObserver" in window) || reduceMotion) { els.forEach((el) => el.classList.add("is-in")); return; }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add("is-in"); io.unobserve(entry.target); } });
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    els.forEach((el) => io.observe(el));
-  }
-
-  /* ---------- Counters ---------- */
-  function initCounters() {
-    const els = $$("[data-count]");
-    if (!els.length) return;
-    const render = (el, v) => { el.textContent = (el.dataset.prefix || "") + Math.round(v).toLocaleString() + (el.dataset.suffix || ""); };
-    const run = (el) => {
-      const target = parseFloat(el.dataset.count);
-      if (reduceMotion) return render(el, target);
-      const start = performance.now(), dur = 1400;
-      const tick = (t) => {
-        const k = Math.min(1, (t - start) / dur);
-        render(el, target * (1 - Math.pow(1 - k, 3)));
-        if (k < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-    if (!("IntersectionObserver" in window)) { els.forEach(run); return; }
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => { if (entry.isIntersecting) { run(entry.target); io.unobserve(entry.target); } });
-    }, { threshold: 0.4 });
-    els.forEach((el) => io.observe(el));
-  }
-
-  /* ---------- Hero slideshow ---------- */
-  function initSlideshow() {
-    $$("[data-slideshow]").forEach((root) => {
-      const slides = $$(".slide", root);
-      const dotsWrap = $("[data-dots]", root);
-      const caption = $("[data-caption-text]", root);
-      if (slides.length < 2) return;
-      let i = 0, timer = null;
-      const dots = slides.map((s, n) => {
-        const b = document.createElement("button");
-        b.type = "button";
-        b.setAttribute("aria-label", `Show ${s.dataset.caption || "slide " + (n + 1)}`);
-        b.addEventListener("click", () => { go(n); restart(); });
-        dotsWrap && dotsWrap.appendChild(b);
-        return b;
-      });
-      const go = (n) => {
-        slides[i].classList.remove("is-active");
-        dots[i].removeAttribute("aria-current");
-        i = (n + slides.length) % slides.length;
-        slides[i].classList.add("is-active");
-        dots[i].setAttribute("aria-current", "true");
-        if (caption) caption.textContent = slides[i].dataset.caption || "";
-      };
-      const restart = () => { clearInterval(timer); timer = setInterval(() => { if (!document.hidden) go(i + 1); }, 6000); };
-      go(0);
-      restart();
-    });
-  }
-
   /* ---------- Product rail ---------- */
   function initRail() {
     $$("[data-rail]").forEach((wrap) => {
       const rail = $(".rail", wrap);
       const prev = $("[data-rail-prev]", wrap.parentElement);
       const next = $("[data-rail-next]", wrap.parentElement);
-      rail.innerHTML = products.map((p, n) => `
+      rail.innerHTML = products.map((p) => `
         <a class="rail-card" href="${productURL(p)}">
-          <div class="rail-card-top"><span class="rail-card-num">${pad(n + 1)}</span><span class="circle-arrow">${ICON.arrow}</span></div>
-          <div class="rail-card-img"><img src="${coverPath(p.slug, true)}" alt="${escapeHTML(p.name)}" loading="lazy" width="720" height="480"></div>
+          <div class="rail-card-top"><span class="rail-card-num">${escapeHTML(catLabel(p.category))}</span><span class="circle-arrow">${ICON.arrow}</span></div>
+          <div class="rail-card-img"><img src="${coverPath(p.slug, true)}" alt="${escapeHTML(p.name)} (concept rendering)" loading="lazy" width="720" height="480"><span class="render-tag">Rendering</span></div>
           <h3>${escapeHTML(p.name)}</h3>
           <p>${escapeHTML(p.short)}</p>
         </a>`).join("");
@@ -192,6 +128,7 @@ const MC_ROOT = (function () {
       <div class="lightbox-panel">
         <div class="lightbox-media" data-lb-frame>
           <img alt="" data-lb-img>
+          <span class="render-tag">Concept rendering</span>
           <button class="lightbox-nav prev" type="button" aria-label="Previous" data-lb-prev>${ICON.left}</button>
           <button class="lightbox-nav next" type="button" aria-label="Next" data-lb-next>${ICON.arrow}</button>
           <div class="view-pills lb-views" data-lb-views role="group" aria-label="Views"></div>
@@ -261,9 +198,9 @@ const MC_ROOT = (function () {
       const specs = [["Naming opportunity", namingHTML(p.partner.naming)], ["Brand canvas", escapeHTML(p.partner.canvas)],
         ["Placement", escapeHTML(p.partner.placement)], ["Built from", escapeHTML(p.container)]];
       body = `
-        <span class="g-card-cat">${pad(products.indexOf(p) + 1)} · ${escapeHTML(catLabel(p.category))}</span>
+        <span class="g-card-cat">${escapeHTML(catLabel(p.category))} · Concept design</span>
         <h2 id="lb-title">${escapeHTML(p.name)}</h2>
-        <p>${escapeHTML(p.short)} Put your name on it, and on every game played around it.</p>
+        <p>${escapeHTML(p.short)}</p>
         <dl class="spec-list">${specs.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
         <div class="lightbox-actions">
           <a class="btn" href="${MC_ROOT}contact/?type=partner&p=${p.slug}">Sponsor this facility ${btnArrow}</a>
@@ -272,17 +209,17 @@ const MC_ROOT = (function () {
     } else {
       const specs = [["Built from", p.container], ...tiers.map((t) => [t.label, fmt(p.prices[t.id])])];
       body = `
-        <span class="g-card-cat">${pad(products.indexOf(p) + 1)} · ${escapeHTML(catLabel(p.category))}</span>
+        <span class="g-card-cat">${escapeHTML(catLabel(p.category))} · Concept design</span>
         <h2 id="lb-title">${escapeHTML(p.name)}</h2>
         <p>${escapeHTML(p.description)}</p>
         <dl class="spec-list">${specs.map(([k, v]) => `<div><dt>${escapeHTML(k)}</dt><dd>${escapeHTML(v)}</dd></div>`).join("")}</dl>
         <ul class="checks">${p.features.map((f) => `<li>${escapeHTML(f)}</li>`).join("")}</ul>
         <div class="tier-note"><strong>What changes between tiers</strong><p>${escapeHTML(p.tiers)}</p></div>
         <div class="lightbox-actions">
-          <a class="btn" href="${productURL(p)}">View &amp; get a quote ${btnArrow}</a>
+          <a class="btn" href="${productURL(p)}">Details &amp; quote ${btnArrow}</a>
           <a class="btn btn-outline" href="${MC_ROOT}contact/?type=buyer&p=${p.slug}">Ask a question</a>
         </div>
-        <p class="small muted">Delivered prices. Site foundation, utility connection, sales tax and permits are not included.</p>`;
+        <p class="small muted">Estimated delivered prices from our cost model. Site foundation, utility connection, sales tax and permits are not included. Not yet built; first builds planned for winter 2026–27.</p>`;
     }
     lb.body.innerHTML = body;
     lb.body.scrollTop = 0;
@@ -305,13 +242,13 @@ const MC_ROOT = (function () {
       cat = escapeHTML(catLabel(p.category));
       title = escapeHTML(p.name);
       sub = escapeHTML(p.short);
-      meta = `<span>From <strong>${fmt(p.prices.economy)}</strong> · ${escapeHTML(p.container.split(" +")[0])}</span>`;
+      meta = `<span>Est. from <strong>${fmt(p.prices.economy)}</strong> · ${escapeHTML(p.container.split(" +")[0])}</span>`;
     }
     return `
-      <button class="g-card reveal" type="button" data-slug="${p.slug}" data-cat="${p.category || ""}" aria-label="View ${escapeHTML(p.name)}">
+      <button class="g-card" type="button" data-slug="${p.slug}" data-cat="${p.category || ""}" aria-label="View ${escapeHTML(p.name)}">
         <div class="g-card-img">
           <img src="${coverPath(p.slug, true)}" alt="" loading="lazy" width="720" height="480">
-          <span class="g-card-num">${mode === "future" ? escapeHTML(p.market) : pad(n + 1)}</span>
+          <span class="render-tag">${mode === "future" ? escapeHTML(p.market) + " · Rendering" : "Rendering"}</span>
         </div>
         <div class="g-card-body">
           <span class="g-card-cat">${cat}</span>
@@ -340,7 +277,7 @@ const MC_ROOT = (function () {
           if (!btn) return;
           $$("[data-filter]", filtersEl).forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
           const f = btn.dataset.filter;
-          cards.forEach((c) => { c.hidden = f !== "all" && c.dataset.cat !== f; c.classList.add("is-in"); });
+          cards.forEach((c) => { c.hidden = f !== "all" && c.dataset.cat !== f; });
         });
       }
 
@@ -362,13 +299,13 @@ const MC_ROOT = (function () {
   /* ---------- Shop catalog (buy/) ---------- */
   function shopCardHTML(p) {
     return `
-      <a class="g-card shop-card reveal" href="${productURL(p)}" data-slug="${p.slug}" data-cat="${p.category}">
-        <div class="g-card-img"><img src="${coverPath(p.slug, true)}" alt="" loading="lazy" width="720" height="480"></div>
+      <a class="g-card shop-card" href="${productURL(p)}" data-slug="${p.slug}" data-cat="${p.category}">
+        <div class="g-card-img"><img src="${coverPath(p.slug, true)}" alt="" loading="lazy" width="720" height="480"><span class="render-tag">Rendering</span></div>
         <div class="g-card-body">
           <span class="g-card-cat">${escapeHTML(catLabel(p.category))}</span>
           <h3>${escapeHTML(p.name)}</h3>
           <p class="small muted">${escapeHTML(p.short)}</p>
-          <div class="g-card-meta"><span>From <strong>${fmt(p.prices.economy)}</strong> · ${escapeHTML(p.container.split(" +")[0])}</span><span class="circle-arrow">${ICON.arrow}</span></div>
+          <div class="g-card-meta"><span>Est. from <strong>${fmt(p.prices.economy)}</strong> · ${escapeHTML(p.container.split(" +")[0])}</span><span class="circle-arrow">${ICON.arrow}</span></div>
         </div>
       </a>`;
   }
@@ -396,7 +333,6 @@ const MC_ROOT = (function () {
       if (state.sort === "price-desc") list = [...list].sort((a, b) => b.prices.economy - a.prices.economy);
       if (state.sort === "name") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
       grid.innerHTML = list.map(shopCardHTML).join("");
-      $$(".reveal", grid).forEach((el) => el.classList.add("is-in"));
       countEl.textContent = `${list.length} ${list.length === 1 ? "facility" : "facilities"}`;
       const url = new URL(location.href);
       if (state.cat === "all") url.searchParams.delete("cat"); else url.searchParams.set("cat", state.cat);
@@ -454,7 +390,7 @@ const MC_ROOT = (function () {
       const typeLabel = { buy: "Purchase", season: "Season rental", event: "Event rental" }[purchase];
       let k, v;
       if (purchase === "buy") {
-        k = avOn ? "Estimated total, with AV" : "Delivered price";
+        k = avOn ? "Estimated total, with AV" : "Estimated delivered price";
         v = fmt(p.prices[tierId] + (avOn ? av : 0));
       } else {
         k = `${typeLabel}, quoted`;
@@ -463,7 +399,7 @@ const MC_ROOT = (function () {
       totalEl.textContent = v;
       totalK.textContent = k;
       if (barTotal) barTotal.textContent = v;
-      if (barK) barK.textContent = `${tier.label} · ${purchase === "buy" ? "Delivered" : typeLabel}`;
+      if (barK) barK.textContent = `${tier.label} · ${purchase === "buy" ? "Estimated" : typeLabel}`;
       const opts = addons.length ? addons.map((i) => i.dataset.label).join(", ") : "None";
       currentOrder = { "Product": p.name, "Tier": tier.label, "Purchase": typeLabel, "Options": opts, "Price Shown": purchase === "buy" ? `${v} (${k})` : "Quoted" };
       if (hidden) hidden.value = `${p.name} | ${tier.label} tier | ${typeLabel} | Add-ons: ${opts} | ${k}: ${v}`;
@@ -577,7 +513,7 @@ const MC_ROOT = (function () {
     return data;
   }
 
-  const newId = (kind) => ({ order: "Q", contact: "C", consult: "F" }[kind] || "W") + "-" +
+  const newId = (kind) => ({ order: "Q", contact: "C" }[kind] || "W") + "-" +
     Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).slice(2, 5).toUpperCase();
 
   // Saves the submission to Google Sheets through the Apps Script web app.
@@ -630,18 +566,10 @@ const MC_ROOT = (function () {
           const kind = form.dataset.form;
           const message = kind === "order"
             ? `Your quote request is in (reference ${id}). We’ll confirm the details and reply within one business day.`
-            : kind === "consult"
-              ? "Thanks! We’ll be in touch shortly to set up your consultation."
-              : `Thanks! Your message is in (reference ${id}). We’ll reply within one business day.`;
+            : `Thanks! Your message is in (reference ${id}). We’ll reply within one business day.`;
           const success = form.dataset.success ? $(form.dataset.success) : null;
           const old = $(".form-alert", form); if (old) old.remove();
-          if (kind === "consult") {
-            const bar = form.closest(".consult");
-            if (bar) {
-              $$("[data-success-how]", bar).forEach((el) => { el.textContent = message; });
-              bar.classList.add("is-done");
-            }
-          } else if (success) {
+          if (success) {
             $$("[data-success-how]", success).forEach((el) => { el.textContent = message; });
             form.hidden = true;
             success.classList.add("is-visible");
@@ -679,34 +607,13 @@ const MC_ROOT = (function () {
     }
   }
 
-  /* ---------- Consultation bar ---------- */
-  function initConsult() {
-    const bar = $("[data-consult]");
-    if (!bar) return;
-    let dismissed = false;
-    try { dismissed = sessionStorage.getItem("mc-consult-dismissed") === "1"; } catch (e) {}
-    if (dismissed) return;
-    const footer = $(".site-footer");
-    const onScroll = () => {
-      const scrolled = window.scrollY / Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const nearFooter = footer && footer.getBoundingClientRect().top < window.innerHeight;
-      bar.classList.toggle("is-visible", scrolled > 0.22 && !nearFooter);
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    $("[data-consult-close]", bar).addEventListener("click", () => {
-      bar.classList.remove("is-visible");
-      window.removeEventListener("scroll", onScroll);
-      try { sessionStorage.setItem("mc-consult-dismissed", "1"); } catch (e) {}
-    });
-  }
-
   /* ---------- "From the field" photos ---------- */
   function initFieldPhotos() {
     const photos = window.MC_FIELD_PHOTOS || [];
     $$("[data-field-photos]").forEach((el) => {
       if (!photos.length) return;
       el.innerHTML = photos.map((ph) => `
-        <figure class="field-photo reveal is-in">
+        <figure class="field-photo">
           <img src="${MC_ROOT}${escapeHTML(ph.src)}" alt="${escapeHTML(ph.caption || ph.tag || "")}" loading="lazy">
           ${ph.tag ? `<span class="field-tag">${escapeHTML(ph.tag)}</span>` : ""}
           ${ph.caption ? `<figcaption>${escapeHTML(ph.caption)}</figcaption>` : ""}
@@ -725,10 +632,6 @@ const MC_ROOT = (function () {
   initTips();
   initForms();
   initContactPrefill();
-  initConsult();
-  initSlideshow();
-  initCounters();
   initFieldPhotos();
   initYear();
-  initReveal();
 })();

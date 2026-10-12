@@ -47,8 +47,8 @@ function page(p) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${esc(p.name)} | Shop | Marland Continental</title>
-  <meta name="description" content="${esc(p.short)} From ${money(p.prices.economy)}, delivered. Economy, Standard and Luxury tiers.">
+  <title>${esc(p.name)} | Designs | Marland Continental</title>
+  <meta name="description" content="${esc(p.short)} Concept design, estimated from ${money(p.prices.economy)} delivered. Economy, Standard and Luxury tiers.">
   <meta property="og:title" content="${esc(p.name)} | Marland Continental">
   <meta property="og:image" content="${R}assets/img/products/${p.slug}/cover.jpg">
   <link rel="icon" type="image/png" href="${R}assets/img/brand/favicon.png">
@@ -59,18 +59,18 @@ function page(p) {
 </head>
 <body class="has-quote-bar">
   <a class="skip-link" href="#main">Skip to content</a>
-  <!-- @header --><!-- /@header -->
+  <header class="site-header"></header>
 
   <main id="main">
     <section class="pdp-wrap">
       <div class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="../">Shop</a><span aria-hidden="true">/</span><a href="../?cat=${p.category}">${esc(catLabel(p.category))}</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.name)}</span>
+          <a href="../">Designs</a><span aria-hidden="true">/</span><a href="../?cat=${p.category}">${esc(catLabel(p.category))}</a><span aria-hidden="true">/</span><span aria-current="page">${esc(p.name)}</span>
         </nav>
 
         <div class="pdp" data-product="${p.slug}">
           <div class="pdp-media">
-            <div class="${frameClass}" data-buy-frame><img src="${img(p, v0.src)}" alt="${esc(p.name)}: ${esc(v0.label)}" data-buy-img></div>${views}
+            <div class="${frameClass}" data-buy-frame><img src="${img(p, v0.src)}" alt="${esc(p.name)}: ${esc(v0.label)}" data-buy-img><span class="render-tag">Concept rendering</span></div>${views}
           </div>
 
           <aside class="pdp-config" aria-label="Configure ${esc(p.name)}">
@@ -78,7 +78,7 @@ function page(p) {
             <h1 class="pdp-title">${esc(p.name)}</h1>
             <div class="pdp-price">
               <span class="pdp-price-v" data-sum-total>${money(p.prices.standard)}</span>
-              <span class="pdp-price-k"><span data-sum-total-k>Delivered price</span>${tip("pricing", "Per-unit price, delivered, including a freight and setting allowance. Excludes site foundation, utility connection, sales tax and permits.")}</span>
+              <span class="pdp-price-k"><span data-sum-total-k>Estimated delivered price</span>${tip("pricing", "An estimate from our cost model, per unit, including a freight and setting allowance. Excludes site foundation, utility connection, sales tax and permits. Your written quote sets the final price.")}</span>
             </div>
 
             <fieldset class="pdp-group">
@@ -98,13 +98,13 @@ function page(p) {
 
             <fieldset class="pdp-group">
               <legend>Options</legend>
-              <div class="opt-row"><label><input type="checkbox" name="addon" value="funding" data-label="Stadia IP funding" checked><span>Stadia IP sponsorship funding</span></label>${tip("Stadia IP funding", "We’ll show you how naming rights and robot sponsorships can offset the cost. Free consult.")}<span class="opt-note">Free</span></div>
+              <div class="opt-row"><label><input type="checkbox" name="addon" value="funding" data-label="Sponsorship funding consult"><span>Sponsorship funding consult</span></label>${tip("sponsorship funding", "We’ll look at whether naming rights and sponsorships, packaged by Stadia IP, could cover part of the cost. Results depend on finding sponsors, so we can’t promise an amount.")}<span class="opt-note">Free</span></div>
               <div class="opt-row"><label><input type="checkbox" name="addon" value="wrap" data-label="Custom graphic wrap"><span>Custom graphic wrap</span></label>${tip("the graphic wrap", "Your colors, logo and mascot on the exterior.")}<span class="opt-note">Quoted</span></div>
               <div class="opt-row"><label><input type="checkbox" name="addon" value="foundation" data-label="Site foundation"><span>Site foundation</span></label>${tip("site foundation", "A concrete pad or pier system for your site. Pads typically run $4,000–$12,000; piers $1,500–$5,000.")}<span class="opt-note">Quoted</span></div>${av}
             </fieldset>
 
             <a class="btn btn-block" href="#order" data-quote-btn>Request a quote ${ARROW}</a>
-            <p class="pdp-fine">No payment online. We confirm specs and send a formal quote.</p>
+            <p class="pdp-fine">No payment online. First builds are planned for winter 2026–27.</p>
           </aside>
 
           <div class="pdp-details">
@@ -119,7 +119,7 @@ function page(p) {
             </dl>
             <a class="pdp-funding" href="${R}partners/">
               <img src="${R}assets/img/brand/stadia-mark.png" alt="" width="326" height="399">
-              <span><strong>Let sponsors help pay for it.</strong> Through Stadia IP, this facility comes with naming rights and robot sponsorships that offset its cost.</span>
+              <span><strong>Sponsorship funding.</strong> Naming rights on this facility could be sold to a local sponsor to cover part of its cost. See how it would work.</span>
             </a>
           </div>
         </div>
@@ -131,8 +131,8 @@ ${ORDER.replaceAll("{{R}}", R)}
     <section class="section" style="padding-top: clamp(56px, 7vw, 96px);">
       <div class="container">
         <div class="section-head split" style="margin-bottom: 32px;">
-          <h2 class="h3">More <em>${esc(catLabel(p.category).toLowerCase())}</em> and related facilities</h2>
-          <a class="link-arrow" href="../">Shop all facilities ${ARROW.replace(' class="arrow"', "")}</a>
+          <h2 class="h3">More ${esc(catLabel(p.category).toLowerCase())} and related designs</h2>
+          <a class="link-arrow" href="../">All designs ${ARROW.replace(' class="arrow"', "")}</a>
         </div>
         <div class="gallery-grid shop-grid" data-related></div>
       </div>
@@ -140,11 +140,11 @@ ${ORDER.replaceAll("{{R}}", R)}
   </main>
 
   <div class="quote-bar" data-quote-bar>
-    <div class="quote-bar-price"><span data-bar-k>Standard · Delivered</span><b data-bar-total>${money(p.prices.standard)}</b></div>
+    <div class="quote-bar-price"><span data-bar-k>Standard · Estimated</span><b data-bar-total>${money(p.prices.standard)}</b></div>
     <a class="btn btn-light btn-sm" href="#order">Request a quote</a>
   </div>
 
-  <!-- @footer --><!-- /@footer -->
+  <footer class="site-footer"></footer>
 
   <script src="${R}js/products.js"></script>
   <script src="${R}js/main.js"></script>

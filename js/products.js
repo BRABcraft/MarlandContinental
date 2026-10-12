@@ -24,7 +24,7 @@ window.MC_CATEGORIES = [
 
 window.MC_TIERS = [
   { id: "economy", label: "Economy", blurb: "Durable, practical finishes at the lowest cost." },
-  { id: "standard", label: "Standard", blurb: "Upgraded materials and equipment. Our most requested tier." },
+  { id: "standard", label: "Standard", blurb: "Upgraded materials and commercial-grade equipment." },
   { id: "luxury", label: "Luxury", blurb: "Premium materials, equipment and finishes throughout." }
 ];
 
@@ -45,7 +45,7 @@ window.MC_PRODUCTS = [
     tiers: "Seating is the big difference: aluminum bench planks, fold-down chairs or chairbacks. The riser frame moves from painted steel to hot-dip galvanized.",
     prices: { economy: 31330, standard: 62510, luxury: 114484 },
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Stands", canvas: "Canopy fascia + 40′ base wrap", placement: "Sideline, in every game photo and stream" }
+    partner: { naming: "The [Your Brand] Stands", canvas: "Canopy fascia + 40′ base wrap", placement: "Sideline, visible in game photos and streams" }
   },
   {
     slug: "stacked-bleacher-unit",
@@ -72,7 +72,7 @@ window.MC_PRODUCTS = [
     features: ["16′ glazed wall", "Three treatment tables", "Storage cabinetry and supply stations", "Climate control and LED lighting"],
     tiers: "Tables range from fixed-height to electric hi-lo. Glazing ranges from fixed aluminum to a thermally broken low-E storefront.",
     prices: { economy: 30134, standard: 52969, luxury: 98343 },
-    images: [{ src: "view-1.jpg", label: "Interior", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Interior rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Training Room", canvas: "Rear wall + end walls", placement: "Field house and athlete entry" }
   },
   {
@@ -86,7 +86,7 @@ window.MC_PRODUCTS = [
     features: ["36′ glazed wall", "Six treatment tables", "Storage cabinetry and supply stations", "Climate control and LED lighting"],
     tiers: "Tables range from fixed-height to electric hi-lo. Glazing ranges from fixed aluminum to a thermally broken low-E storefront.",
     prices: { economy: 50840, standard: 88762, luxury: 152272 },
-    images: [{ src: "view-1.jpg", label: "Interior", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Interior rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Performance Center", canvas: "Rear wall (~380 sq ft) + end walls", placement: "Field house and athlete entry" }
   },
   {
@@ -114,7 +114,7 @@ window.MC_PRODUCTS = [
     features: ["Lockers and bench seating", "Three showers and two toilets", "Vanities and three water heaters", "Waterproof wet-area finishes"],
     tiers: "Plumbing drives the price. Waterproofing (FRP, hot-mop tile or porcelain) and locker grade do the rest.",
     prices: { economy: 64308, standard: 105648, luxury: 161299 },
-    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Locker room", fit: "cover" }, { src: "view-3.jpg", label: "Vanity & showers", fit: "cover" }, { src: "view-4.jpg", label: "Vanity & showers · 2", fit: "cover" }, { src: "view-5.jpg", label: "Vanity & showers · 3", fit: "cover" }, { src: "view-6.jpg", label: "Floor plan", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Locker room rendering", fit: "cover" }, { src: "view-3.jpg", label: "Showers rendering", fit: "cover" }, { src: "view-4.jpg", label: "Showers rendering · 2", fit: "cover" }, { src: "view-5.jpg", label: "Showers rendering · 3", fit: "cover" }, { src: "view-6.jpg", label: "Floor plan", fit: "contain" }],
     partner: { naming: "The [Your Brand] Visitors’ Locker Room", canvas: "Two side walls, ~380 sq ft each", placement: "Field-side, in view of the visiting crowd" }
   },
   {
@@ -128,7 +128,7 @@ window.MC_PRODUCTS = [
     features: ["Lockers and bench seating", "Kitchenette", "Climate control", "Half-bath rough-in and ADA ramp at Luxury"],
     tiers: "Locker grade and how far the kitchenette goes. Luxury adds a half-bath rough-in and an aluminum ADA ramp.",
     prices: { economy: 21521, standard: 37753, luxury: 72154 },
-    images: [{ src: "view-1.jpg", label: "Interior", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
+    images: [{ src: "view-1.jpg", label: "Interior rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
     partner: { naming: "The [Your Brand] Officials’ Lounge", canvas: "Two side walls, ~190 sq ft each", placement: "Behind the bench and team areas" }
   },
   {
@@ -143,7 +143,7 @@ window.MC_PRODUCTS = [
     tiers: "Insulation and comfort: a painted steel box with a treated bench, then insulation, a composite bench and fans, then climate control, sound and scoreboard integration.",
     prices: { economy: 23613, standard: 41661, luxury: 85690 },
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "contain" }, { src: "view-2.jpg", label: "Spec sheet", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Dugout", canvas: "Roof fascia + container end walls", placement: "On the field, in every at-bat" }
+    partner: { naming: "The [Your Brand] Dugout", canvas: "Roof fascia + container end walls", placement: "On the field, next to the action" }
   },
   {
     slug: "equipment-room",
@@ -171,7 +171,7 @@ window.MC_PRODUCTS = [
     tiers: "The window: steel and polycarbonate, aluminum and tempered glass, or thermally broken laminated low-E. Counters go from laminate to solid surface.",
     prices: { economy: 21997, standard: 37349, luxury: 65964 },
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Spec sheet", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Press Box", canvas: "Awning face + side walls", placement: "Above the stands, on every broadcast" }
+    partner: { naming: "The [Your Brand] Press Box", canvas: "Awning face + side walls", placement: "Above the stands, visible on broadcasts" }
   },
   {
     slug: "ticket-booth",
@@ -185,7 +185,7 @@ window.MC_PRODUCTS = [
     tiers: "The turnstile: mechanical at Economy, counter and drop-arm at Standard, electronic with QR/RFID scanning at Luxury. The transaction window follows the same curve.",
     prices: { economy: 27686, standard: 48237, luxury: 85224 },
     images: [{ src: "view-1.jpg", label: "Rendering · High school", fit: "cover" }, { src: "view-2.jpg", label: "Rendering · College", fit: "cover" }, { src: "view-3.jpg", label: "Plans & elevations", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Gate", canvas: "Two side walls + window header", placement: "Main entry, the first thing every fan sees" }
+    partner: { naming: "The [Your Brand] Gate", canvas: "Two side walls + window header", placement: "Main entry, seen by fans on the way in" }
   },
   {
     slug: "concession-stand",
@@ -199,7 +199,7 @@ window.MC_PRODUCTS = [
     tiers: "Health-department compliance. Economy meets minimum NSF, Standard adds full coved finishes and a warming line, and Luxury adds a Type-I hood, ice machine and grease interceptor.",
     prices: { economy: 34898, standard: 65548, luxury: 123320 },
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "cover" }, { src: "view-2.jpg", label: "Plans & elevations", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Snack Bar", canvas: "Full wrap + menu board + awning", placement: "Concourse, every fan walks past" }
+    partner: { naming: "The [Your Brand] Snack Bar", canvas: "Full wrap + menu board + awning", placement: "Concourse, on the main walkway" }
   },
   {
     slug: "merchandise-stand",
@@ -255,7 +255,7 @@ window.MC_PRODUCTS = [
     tiers: "Everything in the single suite, doubled, plus the stack frame, an interior stair cut through the floor and the rooftop level.",
     prices: { economy: 173986, standard: 293902, luxury: 453323 },
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "contain" }, { src: "view-2.jpg", label: "Spec sheet", fit: "contain" }],
-    partner: { naming: "The [Your Brand] Club Tower", canvas: "Two stories of exterior + rooftop", placement: "Premium sideline, highest-visibility hospitality" }
+    partner: { naming: "The [Your Brand] Club Tower", canvas: "Two stories of exterior + rooftop", placement: "Premium sideline hospitality" }
   },
   {
     slug: "container-stage",
@@ -280,7 +280,7 @@ window.MC_FUTURE = [
     market: "Military",
     name: "Mobile Gym",
     container: "40′ high-cube",
-    short: "A deployable strength and conditioning facility. Train anywhere, any mission.",
+    short: "A deployable strength and conditioning room for bases and field units.",
     features: ["Strength equipment: racks, barbells, dumbbells, benches, sleds", "Cardio zone: treadmills, assault bikes, rowers", "Climate control with solar and battery power for off-grid use", "Ships as a standard 40′ container by truck, rail, ship or C-130"],
     images: [{ src: "view-1.jpg", label: "Rendering", fit: "contain" }, { src: "view-2.jpg", label: "Spec sheet", fit: "contain" }]
   },

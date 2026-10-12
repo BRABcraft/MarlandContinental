@@ -11,11 +11,12 @@ Each page is a folder with its own `index.html` (for example `buy/index.html`), 
 | `index.html` | Home. Sends visitors to the buyer or partner path |
 | `buyers/` | Landing page for schools and venues, with the filterable gallery of all 17 products |
 | `partners/` | Landing page for brands and sponsors (naming rights). Same gallery, showing naming format, brand canvas and placement |
-| `buy/` | Shop catalog: category filters (`?cat=seating`), sort, and product cards. Old `?p=<slug>` links redirect to the product page |
+| `buy/` | Designs and estimated prices: category filters (`?cat=seating`), sort, and product cards. Old `?p=<slug>` links redirect to the product page |
 | `buy/<product>/` | Product pages (e.g. `buy/40-foot-bleachers/`): images and description on the left; sticky panel on the right with tier, purchase type, options (ⓘ tooltips), delivered price and the quote button; order form below. Accepts `?tier=` |
 | `markets/` | Future Markets: Military (mobile gym), Emergency Services (shelter), Education (STEM lab), Entertainment (pop-up store), Infrastructure (bus stop) |
 | `contact/` | Contact form. Accepts `?type=<buyer\|partner\|rental\|markets\|investor\|press\|other>&p=<slug>` to prefill |
-| `about/` | Team headshots, story, Stadia IP ecosystem, home base, roadmap |
+| `about/` | Team headshots, story, roadmap (`#status`), partners (`#ecosystem`), home base |
+| `privacy/` | Privacy policy describing what the forms collect and where it's stored |
 
 ## Run locally
 
@@ -28,12 +29,12 @@ Then open http://localhost:8000.
 ## Content sources
 
 - **Prices** in `js/products.js` come from `Marland_Continental_Product_Pricing.xlsx` (Price Worksheet and Stage AV Add-Ons tabs). They are delivered, per-unit prices and exclude site foundation, utility connection, sales tax and permits. If the workbook changes, update the `prices` values and `MC_STAGE_AV`.
-- **Product images** come from the `Marland continental products` folder, and every cover is a rendering. `tools/build_images.py` regenerates `assets/img/products/` (covers, crops and plan views). It deletes and rebuilds that folder.
+- **Product images** come from the `Marland continental products` folder. Every one is a concept rendering, and the site labels them that way; swap in photos once units are built. `tools/build_images.py` regenerates `assets/img/products/` (covers, crops and plan views). It deletes and rebuilds that folder.
 - **Logos**: Marland Continental from the `Marland Continental assets` folder; Stadia IP (color and white) from the Stadia IP one-pager; the StruXure mark from the supplied image. The team headshots are taken from the pitch deck.
 
 ## Form submissions (Google Sheets)
 
-The quote form on every product page, the contact form and the consultation bar all save to a Google Sheet called **Marland Continental Quotes**, through a Google Apps Script web app (the same setup as the Cargotecture survey).
+The quote form on every product page and the contact form save to a Google Sheet called **Marland Continental Quotes**, through a Google Apps Script web app (the same setup as the Cargotecture survey).
 
 1. Create a Google Sheet named **Marland Continental Quotes**.
 2. Give the script **its own Apps Script project**: go to [script.google.com](https://script.google.com) → **New project** (or open the sheet → **Extensions → Apps Script**). Paste in `apps-script/Code.gs` as the only code and save. Don't add it to the survey's project: a project can only have one `doPost`/`doGet`, so the two scripts would override each other.
@@ -62,6 +63,6 @@ Until `sheetsEndpoint` is set, the forms show "Online requests aren't connected 
 
 - **Products and future markets** live in `js/products.js`. The galleries, product rail, lightbox, shop and Future Markets page are generated from it.
 - **Product pages** are static files built from `js/products.js`. After adding, renaming or editing a product, run `node tools/build_product_pages.mjs` (it also re-syncs the header and footer). The order form shared by every product page is `tools/templates/order-section.html`.
-- **Header, footer and consultation bar** are shared. Edit the templates in `tools/sync_partials.py`, then run `python tools/sync_partials.py` to update every page. Write links in the templates as `buy.html?cat=x` and `assets/...`; the script rewrites them to `buy/?cat=x` and adds `../` for pages in folders.
+- **Notice bar, header and footer** are shared. Edit the templates in `tools/sync_partials.py`, then run `python tools/sync_partials.py` to update every page. The script finds each block by its element (`<header class="site-header">`, `<footer class="site-footer">`, `<section id="proof">`), so a new page only needs empty placeholders like `<header class="site-header"></header>`. Write links in the templates as `buy.html?cat=x` and `assets/...`; the script rewrites them to `buy/?cat=x` and adds `../` for pages in folders.
 - **"From the field" section** (testimonials, buyer interest, survey stats) appears on the home, Schools & Venues and Naming Rights pages. Its text is the `PROOF` template in `tools/sync_partials.py`; edit it there and run `python tools/sync_partials.py`. To add photos (sales meetings, builds at 500 Confederate Ave, installs), put them in `assets/img/field/` and list them in `MC_FIELD_PHOTOS` at the bottom of `js/products.js`. The photo strip appears once the list has entries.
 - **Brand tokens** (colors, fonts, radii) are at the top of `css/styles.css`. Fonts are DM Serif Text (headings) and Hind (body), matching the deck.
